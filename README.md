@@ -116,7 +116,7 @@ Tailwind CSS is set up for responsive and utility-first styling. You can modify 
 
 ## License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source and available 
 ```
 
 ### Key Points:
