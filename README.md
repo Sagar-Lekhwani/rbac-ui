@@ -1,5 +1,10 @@
 Here's a sample `README.md` for your project based on React, Tailwind CSS, and a mock data file `localstorage.jsx`:
 
+## Demo Video Working project
+
+[![Watch the demo video](https://screenrec.com/share/EeJUZ83rl0)]
+
+
 ```markdown
 # React and Tailwind CSS Project with LocalStorage Mock API
 

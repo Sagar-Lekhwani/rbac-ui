@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -40,38 +39,39 @@ const UserDetailsPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100 py-10">
-            <div className="container mx-auto bg-white shadow-md rounded-lg p-6">
-                <h1 className="text-2xl font-semibold mb-4 text-gray-800">User Details</h1>
+        <div className="min-h-screen bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 flex items-center justify-center py-10">
+            <div className="max-w-4xl w-full bg-white shadow-lg rounded-lg p-8 space-y-6">
+                <h1 className="text-3xl font-bold text-center text-gray-800 mb-4">User Details</h1>
+                
                 {user ? (
                     <>
                         <div>
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Name:</label>
+                            <div className="mb-6">
+                                <label className="block text-gray-700 text-sm font-medium">Name:</label>
                                 <input
                                     type="text"
                                     value={user.name}
                                     disabled
-                                    className="w-full p-2 mt-2 bg-gray-100 rounded border border-gray-300"
+                                    className="w-full p-3 mt-2 bg-gray-100 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
 
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Email:</label>
+                            <div className="mb-6">
+                                <label className="block text-gray-700 text-sm font-medium">Email:</label>
                                 <input
                                     type="email"
                                     value={user.email}
                                     disabled
-                                    className="w-full p-2 mt-2 bg-gray-100 rounded border border-gray-300"
+                                    className="w-full p-3 mt-2 bg-gray-100 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
 
-                            <div className="mb-4">
-                                <label className="block text-gray-700">Role:</label>
+                            <div className="mb-6">
+                                <label className="block text-gray-700 text-sm font-medium">Role:</label>
                                 <select
                                     value={role}
                                     onChange={handleRoleChange}
-                                    className="w-full p-2 mt-2 bg-white rounded border border-gray-300"
+                                    className="w-full p-3 mt-2 bg-white rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
                                     <option value="employee">Employee</option>
                                     <option value="manager">Manager</option>
@@ -82,26 +82,26 @@ const UserDetailsPage = () => {
                             <div className="flex justify-between mb-6">
                                 <button
                                     onClick={handleSaveRole}
-                                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                                    className="w-full sm:w-auto bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200"
                                 >
                                     Save Role
                                 </button>
                                 <button
                                     onClick={() => navigate("/")}
-                                    className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
+                                    className="w-full sm:w-auto bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-200"
                                 >
                                     Cancel
                                 </button>
                             </div>
                         </div>
 
-                        <h2 className="text-xl font-semibold mb-4 text-gray-800">Tasks</h2>
+                        <h2 className="text-xl font-semibold mb-4 text-gray-800">Assigned Tasks</h2>
                         {userTasks && userTasks.length > 0 ? (
                             <table className="table-auto w-full text-left border-collapse border border-gray-200">
                                 <thead>
                                     <tr className="bg-gray-100">
-                                        <th className="px-4 py-2 border border-gray-200">Task</th>
-                                        <th className="px-4 py-2 border border-gray-200">Status</th>
+                                        <th className="px-4 py-3 border border-gray-200">Task ID</th>
+                                        <th className="px-4 py-3 border border-gray-200">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -111,12 +111,8 @@ const UserDetailsPage = () => {
                                             className="hover:bg-gray-50 cursor-pointer"
                                             onClick={() => handleTaskClick(task.id)}
                                         >
-                                            <td className="px-4 py-2 border border-gray-200">
-                                                {task.id}
-                                            </td>
-                                            <td className="px-4 py-2 border border-gray-200">
-                                                {task.status}
-                                            </td>
+                                            <td className="px-4 py-3 border border-gray-200">{task.id}</td>
+                                            <td className="px-4 py-3 border border-gray-200">{task.status}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -134,4 +130,3 @@ const UserDetailsPage = () => {
 };
 
 export default UserDetailsPage;
-

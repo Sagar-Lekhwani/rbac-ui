@@ -7,12 +7,16 @@ const Signin = ({ onSubmit }) => {
     const [selectedOption, setSelectedOption] = useState("student");
 
     return (
-        <div className="fixed min-h-screen w-screen flex items-center justify-center bg-black bg-opacity-75 top-0">
-            <div className="max-w-md w-full space-y-8 bg-white rounded-md p-8 relative">
-                <button className="absolute top-0 right-6 text-black" onClick={onSubmit}>X</button>
-                <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in</h2>
+        <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-400 to-pink-500 bg-opacity-75">
+            <div className="max-w-lg w-full space-y-8 bg-white rounded-xl shadow-lg p-8 relative">
+                <button
+                    className="absolute top-4 right-6 text-gray-700 text-xl"
+                    onClick={onSubmit}
+                >
+                    X
+                </button>
+                <h2 className="mt-6 text-center text-4xl font-extrabold text-gray-900">Sign in</h2>
                 <Form onSubmit={onSubmit} />
-                {/* {selectedOption === "employee" && <EmployeeForm onSubmit={onSubmit}/>} */}
             </div>
         </div>
     );
@@ -21,7 +25,7 @@ const Signin = ({ onSubmit }) => {
 const Form = ({ onSubmit }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    
+
     const navigate = useNavigate();
     const { isAuth } = useSelector((state) => state.user);
 
@@ -51,7 +55,7 @@ const Form = ({ onSubmit }) => {
                         type="email"
                         autoComplete="email"
                         required
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -64,7 +68,7 @@ const Form = ({ onSubmit }) => {
                         type="password"
                         autoComplete="current-password"
                         required
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                        className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -72,7 +76,7 @@ const Form = ({ onSubmit }) => {
                 <div>
                     <button
                         type="submit"
-                        className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="w-full py-3 px-4 border border-transparent text-lg font-medium rounded-xl text-white bg-gradient-to-r from-blue-500 to-teal-500 hover:bg-gradient-to-l focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                         Sign In
                     </button>
@@ -84,6 +88,5 @@ const Form = ({ onSubmit }) => {
         </div>
     );
 };
-
 
 export default Signin;

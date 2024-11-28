@@ -90,18 +90,19 @@ const AdminDashboard = () => {
     const filteredTasks = taskStatusFilter
         ? employeeTasks.filter((task) => task.status === taskStatusFilter)
         : employeeTasks;
-
     return (
-        <div className="min-h-screen bg-gray-100 py-10">
-            <div className="container mx-auto bg-white shadow-md rounded-lg p-6">
-                <h1 className="text-2xl font-semibold mb-4 text-gray-800">Dashboard</h1>
-
+        <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-200  to-pink-500 pt-14 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto bg-white bg-opacity-90 shadow-lg rounded-xl p-6">
+                
                 {user.role === "admin" ? (
                     <>
-                        <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Admin Dashboard</h1>
+
+                        {/* Add User Button */}
+                        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 space-y-4 sm:space-y-0">
                             <button
                                 onClick={handleAddUser}
-                                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                                className="bg-gradient-to-r from-teal-400 to-blue-500 text-white py-2 px-6 rounded-xl shadow-lg hover:bg-gradient-to-l transition duration-200 transform hover:scale-105"
                             >
                                 Add New User
                             </button>
@@ -112,105 +113,105 @@ const AdminDashboard = () => {
 
                         {/* Add User Form */}
                         {showForm && (
-                            <form
-                                onSubmit={handleFormSubmit}
-                                className="bg-gray-100 p-4 rounded-lg shadow-md mb-6"
-                            >
-                                <h2 className="text-xl font-semibold mb-4">Add New User</h2>
-                                {error && <p className="text-red-600 mb-4">{error}</p>}
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">Name:</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={newUser.name}
-                                        onChange={handleInputChange}
-                                        className="w-full border border-gray-300 px-4 py-2 rounded-lg"
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">Email:</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={newUser.email}
-                                        onChange={handleInputChange}
-                                        className="w-full border border-gray-300 px-4 py-2 rounded-lg"
-                                        required
-                                    />
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">Role:</label>
-                                    <select
-                                        name="role"
-                                        value={newUser.role}
-                                        onChange={handleInputChange}
-                                        className="w-full border border-gray-300 px-4 py-2 rounded-lg"
-                                        required
-                                    >
-                                        <option value="employee">Employee</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-gray-700">Password:</label>
-                                    <input
-                                        type="password"
-                                        name="password"
-                                        value={newUser.password}
-                                        onChange={handleInputChange}
-                                        className="w-full border border-gray-300 px-4 py-2 rounded-lg"
-                                        required
-                                    />
-                                </div>
-                                <div className="flex justify-end">
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowForm(false)}
-                                        className="bg-gray-500 text-white py-2 px-4 rounded-lg mr-4 hover:bg-gray-600"
-                                    >
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                                        disabled={loading}
-                                    >
-                                        {loading ? "Saving..." : "Submit"}
-                                    </button>
-                                </div>
-                            </form>
+                            <div className="bg-white bg-opacity-90 p-6 rounded-xl shadow-lg mb-6">
+                                <form onSubmit={handleFormSubmit}>
+                                    <h2 className="text-2xl font-semibold mb-4 text-gray-700">Add New User</h2>
+                                    {error && <p className="text-red-600 mb-4">{error}</p>}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-gray-700 mb-2">Name:</label>
+                                            <input
+                                                type="text"
+                                                name="name"
+                                                value={newUser.name}
+                                                onChange={handleInputChange}
+                                                className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring focus:ring-indigo-300 focus:border-indigo-500"
+                                                required
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-700 mb-2">Email:</label>
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={newUser.email}
+                                                onChange={handleInputChange}
+                                                className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring focus:ring-indigo-300 focus:border-indigo-500"
+                                                required
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-700 mb-2">Role:</label>
+                                            <select
+                                                name="role"
+                                                value={newUser.role}
+                                                onChange={handleInputChange}
+                                                className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring focus:ring-indigo-300 focus:border-indigo-500"
+                                                required
+                                            >
+                                                <option value="employee">Employee</option>
+                                                <option value="admin">Admin</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-gray-700 mb-2">Password:</label>
+                                            <input
+                                                type="password"
+                                                name="password"
+                                                value={newUser.password}
+                                                onChange={handleInputChange}
+                                                className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring focus:ring-indigo-300 focus:border-indigo-500"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row justify-end mt-6 space-y-4 sm:space-y-0">
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowForm(false)}
+                                            className="bg-gray-500 text-white py-2 px-4 rounded-lg shadow-lg hover:bg-gray-600 transition duration-200 sm:mr-2"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-6 rounded-lg shadow-lg hover:bg-gradient-to-l transition duration-200"
+                                            disabled={loading}
+                                        >
+                                            {loading ? "Saving..." : "Submit"}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         )}
 
                         {/* Users List */}
                         <div className="overflow-x-auto">
-                            <table className="table-auto w-full text-left border-collapse border border-gray-200">
-                                <thead>
-                                    <tr className="bg-gray-100">
-                                        <th className="px-4 py-2 border border-gray-200">Name</th>
-                                        <th className="px-4 py-2 border border-gray-200">Email</th>
-                                        <th className="px-4 py-2 border border-gray-200">Role</th>
-                                        <th className="px-4 py-2 border border-gray-200">Actions</th>
+                            <table className="w-full text-sm text-gray-500">
+                                <thead className="text-white bg-gradient-to-r from-indigo-600 to-purple-500">
+                                    <tr>
+                                        <th className="px-6 py-3 text-left font-semibold">Name</th>
+                                        <th className="px-6 py-3 text-left font-semibold">Email</th>
+                                        <th className="px-6 py-3 text-left font-semibold">Role</th>
+                                        <th className="px-6 py-3 text-left font-semibold">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {filteredUsers.map((u) => (
+                                <tbody className="bg-white">
+                                    {filteredUsers.map((u, index) => (
                                         <tr
                                             key={u.id}
-                                            className="hover:bg-gray-50 cursor-pointer"
+                                            className={`hover:bg-gradient-to-r ${index % 2 === 0 ? "from-gray-100 to-gray-200" : "from-gray-200 to-gray-300"}`}
                                             onClick={(e) => handleRowClick(e, u.id)}
                                         >
-                                            <td className="px-4 py-2 border border-gray-200">{u.name}</td>
-                                            <td className="px-4 py-2 border border-gray-200">{u.email}</td>
-                                            <td className="px-4 py-2 border border-gray-200">{u.role}</td>
-                                            <td className="px-4 py-2 border border-gray-200">
+                                            <td className="px-6 py-4">{u.name}</td>
+                                            <td className="px-6 py-4">{u.email}</td>
+                                            <td className="px-6 py-4">{u.role}</td>
+                                            <td className="px-6 py-4">
                                                 <button
                                                     onClick={() => handleDeleteUser(u.id)}
-                                                    className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                                    disabled={loading}
+                                                    className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-200"
                                                 >
-                                                    {loading ? "Deleting..." : "Delete"}
+                                                    Delete
                                                 </button>
                                             </td>
                                         </tr>
@@ -219,9 +220,12 @@ const AdminDashboard = () => {
                             </table>
                         </div>
                     </>
-                ) : user.role === "manager" ? (
+                ):   user.role === "manager" ? (
+                    <>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Manager Dashboard</h1>
+
                     <div>
-                        <h2 className="text-xl font-semibold">Manager Dashboard</h2>
+                       
                         <div className="overflow-x-auto">
                             <table className="table-auto w-full text-left border-collapse border border-gray-200">
                                 <thead>
@@ -250,9 +254,11 @@ const AdminDashboard = () => {
                             </table>
                         </div>
                     </div>
+                    </>
                 ) : user.role === "employee" ? (
+                    <>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Employee Dashboard</h1>
                     <div>
-                        <h2 className="text-xl font-semibold">Employee Dashboard</h2>
                         <div className="flex space-x-4 mb-6">
                             <button
                                 onClick={() => setTaskStatusFilter("completed")}
@@ -325,6 +331,7 @@ const AdminDashboard = () => {
                             </table>
                         </div>
                     </div>
+                    </>
                 ) : null}
             </div>
         </div>
@@ -332,3 +339,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+

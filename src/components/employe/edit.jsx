@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncupdateUser } from '../../store/Actions/userActions';
 import { useNavigate } from 'react-router-dom';
-// import { asyncupdateUser } from '../../store/Actions/userActions';
 
 const Edit = () => {
     const { user } = useSelector((state) => state.user);
@@ -14,7 +13,7 @@ const Edit = () => {
     const [passwordError, setPasswordError] = useState('');
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const validatePassword = () => {
         if (newPassword !== confirmPassword) {
@@ -30,7 +29,6 @@ const Edit = () => {
     };
 
     const updateUser = () => {
-        // Validate password if provided
         if (newPassword || oldPassword) {
             if (!validatePassword()) return;
         }
@@ -44,65 +42,84 @@ const Edit = () => {
         };
 
         dispatch(asyncupdateUser(updatedUser));
-        navigate('/')
-
+        navigate('/');
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-md shadow-md">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Edit Profile</h2>
-                </div>
-                <div className="mt-6 grid grid-cols-1 gap-6">
-                    <input
-                        type="text"
-                        name="firstname"
-                        placeholder="First Name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                    <input
-                        type="text"
-                        name="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
+        <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-200  py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+            <div className="max-w-lg w-full bg-white shadow-lg rounded-lg p-8 space-y-6">
+                <h2 className="text-3xl font-bold text-center text-gray-800">Edit Profile</h2>
+
+                <div className="space-y-4">
+                    <div className="space-y-1">
+                        <label className="text-gray-700 text-sm font-medium">Full Name</label>
+                        <input
+                            type="text"
+                            name="firstname"
+                            placeholder="Enter your name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    <div className="space-y-1">
+                        <label className="text-gray-700 text-sm font-medium">Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
                     {/* Password Fields */}
-                    <input
-                        type="password"
-                        name="oldPassword"
-                        placeholder="Old Password"
-                        value={oldPassword}
-                        onChange={(e) => setOldPassword(e.target.value)}
-                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                    <input
-                        type="password"
-                        name="newPassword"
-                        placeholder="New Password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm New Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                    />
+                    <div className="space-y-1">
+                        <label className="text-gray-700 text-sm font-medium">Old Password</label>
+                        <input
+                            type="password"
+                            name="oldPassword"
+                            placeholder="Enter your old password"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    <div className="space-y-1">
+                        <label className="text-gray-700 text-sm font-medium">New Password</label>
+                        <input
+                            type="password"
+                            name="newPassword"
+                            placeholder="Enter a new password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    <div className="space-y-1">
+                        <label className="text-gray-700 text-sm font-medium">Confirm New Password</label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            placeholder="Confirm your new password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
                     {/* Display password error */}
                     {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
                 </div>
-                <div className="mt-6">
+
+                <div>
                     <button
                         onClick={updateUser}
-                        className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200"
                     >
                         Update Profile
                     </button>
