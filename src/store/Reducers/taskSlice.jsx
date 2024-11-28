@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     tasks: JSON.parse(localStorage.getItem("tasks")) || [],
-    user: JSON.parse(localStorage.getItem("user")) || {}, // Assume user info is stored in localStorage
+    user: JSON.parse(localStorage.getItem("auth")) || {}, // Assume user info is stored in localStorage
 };
 
 export const taskSlice = createSlice({
@@ -11,14 +11,22 @@ export const taskSlice = createSlice({
     reducers: {
         addTask: (state, action) => {
             const { user } = state;
+            const newTask = { ...action.payload };
+        
             if (user.role === "admin" || user.role === "manager") {
-                const newTask = { ...action.payload };
-                state.tasks.push(newTask);
-                localStorage.setItem("tasks", JSON.stringify(state.tasks)); // Save to localStorage
+                const taskExists = state.tasks.some((task) => task.id === newTask.id);
+        
+                if (!taskExists) {
+                    state.tasks.push(newTask);
+                    localStorage.setItem("tasks", JSON.stringify(state.tasks));
+                } else {
+                    console.error("Task with this ID already exists");
+                }
             } else {
                 console.error("Only admin or manager can add tasks");
             }
         },
+        
         updateTask: (state, action) => {
             const { taskId, updatedTask } = action.payload;
             const taskIndex = state.tasks.findIndex((task) => task.id === taskId);
@@ -28,7 +36,7 @@ export const taskSlice = createSlice({
                 const { user } = state;
 
                 // Manager cannot update a task assigned to themselves
-                if (user.role === "manager" && task.assignedTo === user.id) {
+                if (user.role === "manager" && task.userId === user.id) {
                     console.error("Manager cannot update their own tasks.");
                     return;
                 }
@@ -51,13 +59,13 @@ export const taskSlice = createSlice({
 
             const { user } = state;
             // Manager cannot delete their own tasks
-            if (user.role === "manager" && taskToDelete.assignedTo === user.id) {
+            if (user.role === "manager" && taskToDelete.UserId === user.id) {
                 console.error("Manager cannot delete their own tasks.");
                 return;
             }
 
             // Only admin or manager can delete a task, and manager cannot delete their own task
-            if (user.role === "admin" || (user.role === "manager" && taskToDelete.assignedTo !== user.id)) {
+            if (user.role === "admin" || (user.role === "manager" && taskToDelete.userId !== user.id)) {
                 state.tasks = state.tasks.filter((task) => task.id !== taskId);
                 localStorage.setItem("tasks", JSON.stringify(state.tasks)); // Ensure tasks are updated in localStorage
             } else {

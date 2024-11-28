@@ -43,7 +43,7 @@ const TaskEditPage = () => {
         try {
             // Dispatch asyncDeleteTask with task ID to delete
             await dispatch(asyncDeleteTask(task.id));
-            navigate("/admin"); // Navigate after deletion
+            navigate("/"); // Navigate after deletion
         } catch (error) {
             setError("Failed to delete the task. Please try again later.");
             console.log(error)
@@ -55,7 +55,7 @@ const TaskEditPage = () => {
     // Ensure task exists before rendering the form
     useEffect(() => {
         if (!task) {
-            navigate("/admin"); // Redirect to admin if task doesn't exist
+            navigate("/"); // Redirect to admin if task doesn't exist
         }
     }, [task, navigate]);
 

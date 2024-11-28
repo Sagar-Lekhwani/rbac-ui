@@ -8,16 +8,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { asynccurrentUser, asyncremoveUser } from "./store/Actions/userActions";
 import Edit from "./components/employe/edit";
 import Signupemployee from "./components/admin/signupemployee";
-import Profile2 from "./components/admin/profile2";
+import Profile2 from "./components/admin/AddTaskPage";
 // import { asynccurrentEmploye, asyncremoveEmploye } from "./store/Actions/employeActions";
 import SignInPage from "./components/admin/signinemp";
 import initializeMockData from "./utils/localstorage";
 // import Employeepage from "./components/admin/AdminDashboard";
 import UserDetailsPage from "./components/admin/UserDetailsPage";
-import AddTaskForm from "./components/admin/AddTaskForm";
+// import AddTaskForm from "./components/admin/AddTaskForm";
 import TaskEditPage from "./components/Task/TaskEditPage";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import NotAuthorized from "./components/employe/notauthorised";
+import AddTaskPage from "./components/admin/AddTaskPage";
 // import TaskEditPage from "./components/Task/TaskEditPage";
 
 
@@ -109,12 +110,12 @@ const App = () => {
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signinpage" element={<SignInPage />} />
                 <Route path="/edit" element={!isAuth ? <Home /> : <Edit />} />
-                <Route path="/not-authorized" element={<NotAuthorized />}/>
-                <Route path="/add-Task" element={ isAuth && user.role === 'admin' || 'manager' ? <AddTaskForm /> : <Signin />}/>
-                <Route path="/tasks/:taskId" element={ isAuth && user.role === 'admin' || 'manager' ? <TaskEditPage /> : <Signin />}/>
+                {/* <Route path="/not-authorized" element={<NotAuthorized />}/> */}
+                <Route path="/add-Task" element={ isAuth && (user.role === 'admin' || 'manager') ? <AddTaskPage /> : (isAuth ? <NotAuthorized/> : <Signin />)}/>
+                <Route path="/tasks/:taskId" element={ isAuth && (user.role === 'admin' || 'manager') ? <TaskEditPage /> : <Signin />}/>
                 <Route
     path="/user-details/:userId"
-    element={isAuth && user.role === "admin" ? <UserDetailsPage /> : <Signin />}
+    element={isAuth && user.role === "admin" || 'manager' ? <UserDetailsPage /> : <Signin />}
 />
 
             </Routes>

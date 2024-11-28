@@ -118,31 +118,31 @@ export const asyncDeleteUser = (userId) => (dispatch) => {
 };
 
 // Add a task to the tasks array and update the user's task list
-export const asyncAddTask = (userId, task) => async (dispatch, getState) => {
-    // Convert userId to number if necessary
-    const userIdNumber = Number(userId);
 
-    // Generate a task ID using Date.now() or any other method
-    const newTask = { ...task};
-
-    // Get the list of users from the Redux state
+export const asyncAddTask = (userId, task) => (dispatch, getState) => {
     const { users } = getState().user;
+    const { tasks } = getState().tasks;
 
-    // Update the user's task array with the new task ID
+    // Prevent duplication
+    if (tasks.some((t) => t.id === task.id)) {
+        console.error("Task with this ID already exists");
+        return;
+    }
+
+    // Update user's tasks array
     const updatedUsers = users.map((user) =>
-        user.id === userIdNumber // Compare as numbers
-            ? { ...user, tasks: [...user.tasks, newTask.id] }
+        user.id === Number(userId)
+            ? { ...user, tasks: [...user.tasks, task.id] }
             : user
     );
 
-    // Update localStorage with the new list of users
+    // Save to localStorage
     localStorage.setItem("users", JSON.stringify(updatedUsers));
-
-    // Dispatch the action to add the task to the tasks list in the Redux store
-    dispatch(addTask(newTask));
-    dispatch(updateUsers(updatedUsers));
-
+    dispatch(addTask(task)); // Update tasks in Redux
+    dispatch(updateUsers(updatedUsers)); // Update users in Redux
 };
+
+
 
 
 
@@ -160,40 +160,34 @@ export const asyncUpdateTask = (taskId, updatedTask) => (dispatch, getState) => 
 // Delete a task
 // userActions.js
 export const asyncDeleteTask = (taskId) => (dispatch, getState) => {
-    const { tasks } = getState().tasks;  // Fetch current tasks from store
-    const { users } = getState().user;  // Fetch current users from store
+    const { tasks } = getState().tasks;
+    const { users } = getState().user;
 
-    // Find the task that we want to delete
+    // Check if the task exists
     const taskToDelete = tasks.find((task) => task.id === taskId);
-    
     if (!taskToDelete) {
         console.error("Task not found.");
         return;
     }
 
-    // Remove task from tasks array
+    // Remove task from `tasks` array
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
 
-    // Find the user to whom the task is assigned
-    const updatedUsers = users.map((user) => {
-        // If the user has this task, remove the task from the user's taskIds array
-        if (user.tasks.includes(taskId)) {
-            return {
-                ...user,
-                tasks: user.tasks.filter((id) => id !== taskId),
-            };
-        }
-        return user;
-    });
+    // Remove task from user's tasks
+    const updatedUsers = users.map((user) => ({
+        ...user,
+        tasks: user.tasks.filter((id) => id !== taskId),
+    }));
 
-    // Update local storage with updated tasks and users
+    // Save updated state to localStorage
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
     localStorage.setItem("users", JSON.stringify(updatedUsers));
 
     // Dispatch actions to update Redux state
-    dispatch(deleteTask(taskId));  // Dispatch delete task from taskSlice
-    dispatch(updateUsers(updatedUsers));  // Dispatch update users from userSlice
+    dispatch(deleteTask({ taskId })); // Update tasks state
+    dispatch(updateUsers(updatedUsers)); // Update users state
 };
+
 
 
 

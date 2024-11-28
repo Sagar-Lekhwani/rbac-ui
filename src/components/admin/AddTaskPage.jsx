@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { asyncAddTask } from "../../store/Actions/userActions";
 
 const AddTaskPage = () => {
+  const { users, user } = useSelector((state) => state.user); // Get users and user from Redux state
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { users, user } = useSelector((state) => state.user); // Get users and user from Redux state
 
     const [taskDetails, setTaskDetails] = useState({
         title: "",
@@ -18,13 +18,6 @@ const AddTaskPage = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
-    // Redirect unauthorized users
-    useEffect(() => {
-        if (user?.role !== "admin" && user?.role !== "manager") {
-            navigate("/not-authorized"); // Redirect if user is not admin or manager
-        }
-    }, [user, navigate]);
 
     // Handle changes to form fields
     const handleChange = (e) => {

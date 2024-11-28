@@ -222,8 +222,6 @@ const AdminDashboard = () => {
                 ) : user.role === "manager" ? (
                     <div>
                         <h2 className="text-xl font-semibold">Manager Dashboard</h2>
-                        <p className="text-gray-600">You have limited access as a manager.</p>
-                        {/* Show employees list but no delete button */}
                         <div className="overflow-x-auto">
                             <table className="table-auto w-full text-left border-collapse border border-gray-200">
                                 <thead>
@@ -234,13 +232,20 @@ const AdminDashboard = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {filteredUsers.map((u) => (
-                                        <tr key={u.id} className="hover:bg-gray-50 cursor-pointer">
-                                            <td className="px-4 py-2 border border-gray-200">{u.name}</td>
-                                            <td className="px-4 py-2 border border-gray-200">{u.email}</td>
-                                            <td className="px-4 py-2 border border-gray-200">{u.role}</td>
-                                        </tr>
-                                    ))}
+                                {filteredUsers
+    .filter((u) => u.role === "employee") // Exclude admins and include only employees
+    .map((u) => (
+        <tr
+            key={u.id}
+            className="hover:bg-gray-50 cursor-pointer"
+            onClick={(e) => handleRowClick(e, u.id)}
+        >
+            <td className="px-4 py-2 border border-gray-200">{u.name}</td>
+            <td className="px-4 py-2 border border-gray-200">{u.email}</td>
+            <td className="px-4 py-2 border border-gray-200">{u.role}</td>
+        </tr>
+    ))}
+
                                 </tbody>
                             </table>
                         </div>

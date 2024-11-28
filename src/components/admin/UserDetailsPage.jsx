@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,7 +20,7 @@ const UserDetailsPage = () => {
 
     useEffect(() => {
         if (!user) {
-            navigate("/admin");
+            navigate("/");
         }
     }, [user, navigate]);
 
@@ -86,7 +87,7 @@ const UserDetailsPage = () => {
                                     Save Role
                                 </button>
                                 <button
-                                    onClick={() => navigate("/admin")}
+                                    onClick={() => navigate("/")}
                                     className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
                                 >
                                     Cancel
@@ -111,7 +112,7 @@ const UserDetailsPage = () => {
                                             onClick={() => handleTaskClick(task.id)}
                                         >
                                             <td className="px-4 py-2 border border-gray-200">
-                                                {task.title}
+                                                {task.id}
                                             </td>
                                             <td className="px-4 py-2 border border-gray-200">
                                                 {task.status}
@@ -133,3 +134,4 @@ const UserDetailsPage = () => {
 };
 
 export default UserDetailsPage;
+
