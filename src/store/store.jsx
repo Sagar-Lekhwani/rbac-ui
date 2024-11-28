@@ -1,15 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userReducer from "./Reducers/userSlice";
-// import  internshipReducer  from "./Reducers/intershipSlice";
-// import resumeReducer from "./Reducers/resumeSlice";
-// import employeReducer from "./Reducers/employeSlice";
-
+import taskReducer from "./Reducers/taskSlice";
+import userReducer  from "./Reducers/userSlice";
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
-        // internships: internshipReducer,
-        // resume: resumeReducer,
-        // employe: employeReducer,
+        tasks: taskReducer,
     },
 });

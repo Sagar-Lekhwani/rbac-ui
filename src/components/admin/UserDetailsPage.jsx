@@ -1,33 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { updateUserRole } from "../../store/Reducers/userSlice";
 
 const UserDetailsPage = () => {
-    const { userId } = useParams(); // Get user ID from the URL
+    const { userId } = useParams();
     const { users } = useSelector((state) => state.user);
-    const user = users.find((u) => u.id === parseInt(userId)); // Find the user by ID
-    console.log(user)
+    const { tasks } = useSelector((state) => state.tasks);
+    const user = users.find((u) => u.id === parseInt(userId));
     const dispatch = useDispatch();
-    const history = useNavigate();
+    const navigate = useNavigate();
 
     const [role, setRole] = useState(user?.role);
 
+    const userTasks = user.tasks
+        .map((taskId) => tasks.find((task) => task.id === taskId)) // Find task details by ID
+        .filter((task) => task); 
+
     useEffect(() => {
         if (!user) {
-            history("/admin"); // If the user doesn't exist, redirect to the admin dashboard
+            navigate("/admin");
         }
-    }, [user, history]);
+    }, [user, navigate]);
 
     const handleRoleChange = (e) => {
         setRole(e.target.value);
     };
 
-    const handleSave = () => {
+    const handleSaveRole = () => {
         if (user) {
             dispatch(updateUserRole({ userId: user.id, newRole: role }));
-            history("/admin"); // Redirect back to the dashboard after saving
+            navigate("/");
         }
+    };
+
+    const handleTaskClick = (taskId) => {
+        navigate(`/tasks/${taskId}`); // Redirect to the task edit page
     };
 
     return (
@@ -35,55 +43,87 @@ const UserDetailsPage = () => {
             <div className="container mx-auto bg-white shadow-md rounded-lg p-6">
                 <h1 className="text-2xl font-semibold mb-4 text-gray-800">User Details</h1>
                 {user ? (
-                    <div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Name:</label>
-                            <input
-                                type="text"
-                                value={user.firstname}
-                                disabled
-                                className="w-full p-2 mt-2 bg-gray-100 rounded border border-gray-300"
-                            />
+                    <>
+                        <div>
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Name:</label>
+                                <input
+                                    type="text"
+                                    value={user.name}
+                                    disabled
+                                    className="w-full p-2 mt-2 bg-gray-100 rounded border border-gray-300"
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Email:</label>
+                                <input
+                                    type="email"
+                                    value={user.email}
+                                    disabled
+                                    className="w-full p-2 mt-2 bg-gray-100 rounded border border-gray-300"
+                                />
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="block text-gray-700">Role:</label>
+                                <select
+                                    value={role}
+                                    onChange={handleRoleChange}
+                                    className="w-full p-2 mt-2 bg-white rounded border border-gray-300"
+                                >
+                                    <option value="employee">Employee</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+
+                            <div className="flex justify-between mb-6">
+                                <button
+                                    onClick={handleSaveRole}
+                                    className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                                >
+                                    Save Role
+                                </button>
+                                <button
+                                    onClick={() => navigate("/admin")}
+                                    className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Email:</label>
-                            <input
-                                type="email"
-                                value={user.email}
-                                disabled
-                                className="w-full p-2 mt-2 bg-gray-100 rounded border border-gray-300"
-                            />
-                        </div>
-
-                        <div className="mb-4">
-                            <label className="block text-gray-700">Role:</label>
-                            <select
-                                value={role}
-                                onChange={handleRoleChange}
-                                className="w-full p-2 mt-2 bg-white rounded border border-gray-300"
-                            >
-                                <option value="employee">Employee</option>
-                                <option value="manager">Manager</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-
-                        <div className="flex justify-between">
-                            <button
-                                onClick={handleSave}
-                                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                            >
-                                Save
-                            </button>
-                            <button
-                                onClick={() => history("/admin")}
-                                className="bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </div>
+                        <h2 className="text-xl font-semibold mb-4 text-gray-800">Tasks</h2>
+                        {userTasks && userTasks.length > 0 ? (
+                            <table className="table-auto w-full text-left border-collapse border border-gray-200">
+                                <thead>
+                                    <tr className="bg-gray-100">
+                                        <th className="px-4 py-2 border border-gray-200">Task</th>
+                                        <th className="px-4 py-2 border border-gray-200">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {userTasks.map((task) => (
+                                        <tr
+                                            key={task.id}
+                                            className="hover:bg-gray-50 cursor-pointer"
+                                            onClick={() => handleTaskClick(task.id)}
+                                        >
+                                            <td className="px-4 py-2 border border-gray-200">
+                                                {task.title}
+                                            </td>
+                                            <td className="px-4 py-2 border border-gray-200">
+                                                {task.status}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p className="text-gray-600">No tasks assigned.</p>
+                        )}
+                    </>
                 ) : (
                     <p className="text-red-600 font-semibold">User not found.</p>
                 )}
