@@ -10,7 +10,7 @@ import Edit from "./components/employe/edit";
 import Signupemployee from "./components/admin/signupemployee";
 import Profile2 from "./components/admin/AddTaskPage";
 // import { asynccurrentEmploye, asyncremoveEmploye } from "./store/Actions/employeActions";
-import SignInPage from "./components/admin/signinemp";
+// import SignInPage from "./components/admin/signinemp";
 import initializeMockData from "./utils/localstorage";
 // import Employeepage from "./components/admin/AdminDashboard";
 import UserDetailsPage from "./components/admin/UserDetailsPage";
@@ -108,7 +108,7 @@ const App = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/signupemploye" element={<Signupemployee />} />
                 <Route path="/signin" element={<Signin />} />
-                <Route path="/signinpage" element={<SignInPage />} />
+                {/* <Route path="/signinpage" element={<SignInPage />} /> */}
                 <Route path="/edit" element={!isAuth ? <Home /> : <Edit />} />
                 {/* <Route path="/not-authorized" element={<NotAuthorized />}/> */}
                 <Route path="/add-Task" element={ isAuth && (user.role === 'admin' || 'manager') ? <AddTaskPage /> : (isAuth ? <NotAuthorized/> : <Signin />)}/>
